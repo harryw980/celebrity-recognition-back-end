@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const knex = require('knex');
 const bcrypt = require('bcrypt-nodejs');
-//const { response } = require('express');
 
 const db = knex({
     client: 'pg',
@@ -48,7 +47,6 @@ app.post('/register', (req, res) => {
         return res.status(400).json('empty form');
     }
 
-
     const hash = bcrypt.hashSync(pass);
     db.transaction(trx => {
         trx.insert({
@@ -75,19 +73,6 @@ app.post('/register', (req, res) => {
     .catch(err => res.status(400).json('unable to register'))
 })
 
-// app.get('/profile/:id', (req, res) => {
-//     const { id } = req.params;
-//     let found = false;
-//     database.user.forEach((user) => {
-//         if(user.id === id){
-//             found = true;
-//             res.json(user);
-//             return;
-//         }
-//     })
-//     if(!found){res.json(404);}
-// })
-
 app.put('/image', (req, res) => {
     const { id } = req.body;
     db('users')
@@ -98,7 +83,6 @@ app.put('/image', (req, res) => {
             res.json(entries[0]);
         })
         .catch(error => {
-            //console.log(error);
             res.status(400).json('unable to get count')
         })
 })
