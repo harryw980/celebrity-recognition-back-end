@@ -19,6 +19,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get('/', (req, res) => {
+    res.json('working');
+})
+
 app.post('/signin', (req, res) => {
     const {email, pass} = req.body;
 
@@ -80,7 +84,7 @@ app.put('/image', (req, res) => {
         .increment('entries', 1)
         .returning('entries')
         .then(entries => {
-            res.json(entries[0]);
+            res.json(entries[0]);he
         })
         .catch(error => {
             res.status(400).json('unable to get count')
