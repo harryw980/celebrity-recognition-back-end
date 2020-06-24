@@ -7,10 +7,8 @@ const bcrypt = require('bcrypt-nodejs');
 const db = knex({
     client: 'pg',
     connection: {
-      host : 'postgresql-cylindrical-08755',
-      user : 'postgres',
-      password : 'test',
-      database : 'face_recogntion'
+      connectString : process.env.DATABASE_URL,
+      ssl: true
     }
 });
 
