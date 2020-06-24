@@ -7,8 +7,10 @@ const bcrypt = require('bcrypt-nodejs');
 const db = knex({
     client: 'pg',
     connection: {
-      connectString : process.env.DATABASE_URL,
-      ssl: false
+      connectionString : process.env.DATABASE_URL,
+      ssl: {
+          rejectUnauthorized: false
+      }
     }
 });
 
@@ -74,7 +76,10 @@ app.post('/register', (req, res) => {
         .then(trx.commit)
         .catch(trx.rollback)
     })
-    .catch(err => res.status(400).json('unable to register'))
+    .catch(err => {
+        res.status(400).json(err)
+        console.log(err);
+    })
 })
 
 app.put('/image', (req, res) => {
