@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt-nodejs');
 const db = knex({
     client: 'pg',
     connection: {
-      host : '127.0.0.1',
+      host : 'postgresql-cylindrical-08755',
       user : 'postgres',
       password : 'test',
       database : 'face_recogntion'
@@ -92,5 +92,5 @@ app.put('/image', (req, res) => {
 })
 
 app.listen(process.env.PORT || 3000, ()=>{
-    console.log('App is running on port 3000');
+    console.log(`App is running on port ${process.env.PORT || 3000}`);
 })
