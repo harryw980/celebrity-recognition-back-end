@@ -4,6 +4,7 @@ const cors = require('cors');
 const knex = require('knex');
 const bcrypt = require('bcrypt-nodejs');
 
+//Database connection initialization
 const db = knex({
     client: 'pg',
     connection: {
@@ -14,6 +15,7 @@ const db = knex({
     }
 });
 
+//Database permission setup
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 const app = express();
@@ -21,10 +23,12 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+//Testing request
 app.get('/', (req, res) => {
     res.json('server working');
 })
 
+//Signin requet, search credentials in database and respond with user information if found
 app.post('/signin', (req, res) => {
     const {email, pass} = req.body;
 
@@ -47,6 +51,7 @@ app.post('/signin', (req, res) => {
     .catch(err => res.status(400).json('user does not exist'))
 });
 
+//Register request, put information into database and respond with user information
 app.post('/register', (req, res) => {
     const { email, name, pass } = req.body;
     if(!email || !name || !pass){
@@ -81,6 +86,7 @@ app.post('/register', (req, res) => {
     })
 })
 
+//Updating user information requst, respond with number of entries the user had made
 app.put('/image', (req, res) => {
     const { id } = req.body;
     db('users')
